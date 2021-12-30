@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { useGetPokemonByNameQuery } from './pokemon';
 import { Formik, Field, Form, FormikHelpers } from 'formik';
 import logo from '../images/logopokemon.png';
+import loader from '../images/loader.gif';
+import error404 from '../images/pikachu.gif';
 import { DivPokemon, InputContainer, Grid } from './style';
 interface Values {
   firstName: string;
@@ -70,13 +72,16 @@ export const Pokedex = () => {
               </InputContainer>
               {error ? (
                 <>
+                  <img src={error404} height="300px" alt="no se encontro pokemon" />
                   No se encontro el pokémon
                   <button type="button" onClick={back}>
                     regresar
                   </button>
                 </>
               ) : isLoading ? (
-                <>Loading...</>
+                <>
+                  <img src={loader} height="300px" />
+                </>
               ) : data ? (
                 <> {data.species ? (
                       <>
