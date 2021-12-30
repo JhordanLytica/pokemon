@@ -1,12 +1,17 @@
 import React from 'react';
-//import { Counter } from './features/counter/Counter';
-import { Pokedex } from './features/pokedex/index';
+import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import { Pokedex } from './pokedex/index';
+import { PokemonInformation } from './pokedex/pokemonInformation';
 
 function App() {
   return (
     <div className="App">
-      <Pokedex />
-      {/*<Counter />*/}
+      <Router>
+        <Routes>
+          <Route path="/" element={<Pokedex />} />
+          <Route path="/:name" element={<PokemonInformation />} />
+        </Routes>
+      </Router>
     </div>
   );
 }

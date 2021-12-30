@@ -29,7 +29,7 @@ export const InputContainer = styled.div`
 `;
 
 export const DivPokemon = styled.div`
-  h3 {
+  .buttonTitle {
     width: 100%;
     text-align: center;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -37,6 +37,12 @@ export const DivPokemon = styled.div`
     color: #909497;
     text-transform: uppercase;
     margin-top: 5px;
+    border: none;
+    background-color: transparent;
+    &:hover {
+      text-decoration: underline;
+      color: #16A085;
+    }
   }
   img {
     height: 180px;
