@@ -1,18 +1,30 @@
-import React from 'react';
-import { Section } from '../../stories/moleculas/section/Section';
-import { AllPokemon } from '../allPokemon/allPokemon';
+import React, { useState } from 'react';
+import { useAppDispatch } from '../app/hooks';
+import { getPokemon } from './redux/pokemonSlice';
+import { Section } from '../stories/moleculas/section/Section';
+import { AllPokemon } from './allPokemon';
+import { useNavigate } from "react-router-dom";
 import { useGetPokemonByNameQuery } from './pokemon';
 import { Formik, Field, Form, FormikHelpers } from 'formik';
-import logo from '../../images/logopokemon.png';
+import logo from '../images/logopokemon.png';
 import { DivPokemon, InputContainer, Grid } from './style';
 interface Values {
   firstName: string;
 }
 //bulbasaur
 export const Pokedex = () => {
-  const [state, setState] = React.useState('');
+  const dispatch = useAppDispatch();
+  const [state, setState] = useState('');
   const { data, error, isLoading } = useGetPokemonByNameQuery(state);
-  
+  const navigate = useNavigate();
+  const back = () => {
+    setState('');
+    navigate('/');
+  }
+  const infoPokemon = (name: string) => {
+    navigate(`/${name}`);
+    dispatch(getPokemon(name));
+  }
   return (
     <Section width='100%' height='auto'>
       <Section 
@@ -38,7 +50,7 @@ export const Pokedex = () => {
         >
           <Formik
             initialValues={{
-              firstName: '',
+              firstName: state,
             }}
             onSubmit={(
               values: Values,
@@ -46,6 +58,8 @@ export const Pokedex = () => {
             ) => {
               setState(values.firstName);
               setSubmitting(true);
+              navigate(`/${values.firstName}`);
+              dispatch(getPokemon(values.firstName));
             }}
             style={{width: '100%'}}
           >
@@ -55,7 +69,12 @@ export const Pokedex = () => {
                 <button type="submit">Submit</button>
               </InputContainer>
               {error ? (
-                <>No se encontro el pokémon</>
+                <>
+                  No se encontro el pokémon
+                  <button type="button" onClick={back}>
+                    regresar
+                  </button>
+                </>
               ) : isLoading ? (
                 <>Loading...</>
               ) : data ? (
@@ -74,7 +93,13 @@ export const Pokedex = () => {
                             <div className="center">
                               <img src={data.sprites.front_default} alt={data.species.name} />
                             </div>
-                            <h3>#{data.id} {data.species.name}</h3>
+                            <button 
+                              type="button"
+                              className="buttonTitle"
+                              onClick={() => infoPokemon(data.species.name)}
+                            >
+                              #{data.id} {data.species.name}
+                            </button>
                           </DivPokemon>
                         </Section>
                       </>

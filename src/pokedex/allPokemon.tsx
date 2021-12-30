@@ -1,17 +1,32 @@
 import React from 'react';
-import { Section } from '../../stories/moleculas/section/Section';
-import { useGetPokemonByNameQuery } from '../pokedex/pokemon';
-import { DivPokemon } from '../pokedex/style';
+import { useAppDispatch } from '../app/hooks';
+import { getPokemon } from './redux/pokemonSlice';
+import { useNavigate } from "react-router-dom";
+import { Section } from '../stories/moleculas/section/Section';
+import { useGetPokemonByNameQuery } from './pokemon';
+import { DivPokemon } from './style';
 
 interface props {
   pokemon: string;
 }
+
 export const AllPokemon: React.FC<props> = ({ pokemon = ''}) => {
+  const dispatch = useAppDispatch();
   const { data, error, isLoading } = useGetPokemonByNameQuery(pokemon);
+  const navigate = useNavigate();
+  const infoPokemon = (name: string) => {
+    navigate(`/${name}`);
+    dispatch(getPokemon(name));
+  }
   return (
     <div>
       {error ? (
-        <>No se encontro el pokémon</>
+        <>
+          No se encontro el pokémon
+          <button type="button" onClick={() => navigate('/')}>
+            regresar
+          </button>
+        </>
       ) : isLoading ? (
         <>Loading...</>
       ) : data ? (
@@ -30,13 +45,14 @@ export const AllPokemon: React.FC<props> = ({ pokemon = ''}) => {
                     <div className="center">
                       <img src={data.sprites.front_default} alt={data.species.name} />
                     </div>
-                    <h3>#{data.id} {data.species.name}</h3>
+                    <button 
+                      type="button"
+                      className="buttonTitle"
+                      onClick={() => infoPokemon(data.species.name)}
+                    >
+                      #{data.id} {data.species.name}
+                    </button>
                   </DivPokemon>
-                  {/*<div style={{width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                    {data.stats.map(({stat}: any) => (
-                      <div>{stat.name}</div>
-                    ))}
-                    </div>*/}
                 </Section>
               </>
             ) :null}
