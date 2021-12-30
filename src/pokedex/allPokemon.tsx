@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Section } from '../stories/moleculas/section/Section';
 import { useGetPokemonByNameQuery } from './pokemon';
 import { DivPokemon } from './style';
+import loader from '../images/loader.gif';
 
 interface props {
   pokemon: string;
@@ -28,7 +29,7 @@ export const AllPokemon: React.FC<props> = ({ pokemon = ''}) => {
           </button>
         </>
       ) : isLoading ? (
-        <>Loading...</>
+        <><img src={loader} height="200px" /></>
       ) : data ? (
         <> {data.species ? (
               <>

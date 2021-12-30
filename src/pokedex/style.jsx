@@ -76,3 +76,71 @@ export const Grid = styled.div`
   justify-content: space-between;
   padding: 10px;
 `;
+
+export const Info = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  h2 {
+    text-align: center;
+    color: #A6ACAF;
+  }
+  h3 {
+    width: 100%;
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 30px;
+    color: #A6ACAF;
+    text-transform: uppercase;
+    border: none;
+    background-color: transparent;
+  }
+  img {
+    height: 180px;
+    border-radius: 50%;
+    background-color: #fff;
+  }
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .pokemon {
+    width: 35%;
+    background-image: linear-gradient(140deg, #bff098 , #6fd6ff);
+    border-radius: 10px 0 0 10px;
+  }
+  .info {
+    width: 65%;
+    padding: 20px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: space-between;
+    width: 80%;
+    div {
+      padding: 5px;
+      text-transform: capitalize;
+      color: #A6ACAF;
+    }
+  }
+  button {
+    border: 10px solid;
+    border-image-slice: 1;
+    border-width: 5px;
+    border-image-source: linear-gradient(140deg, #00e0d8 , #009565);
+    background-color: transparent;
+    color: #A6ACAF;
+    font-size: 18px;
+    width: 40%;
+    height: 50px;
+    &:hover {
+      border: none;
+      border-radius: 10px;
+      background-image: linear-gradient(140deg, #00e0d8 , #009565);
+      color: #fff;
+    }
+  }
+`;
